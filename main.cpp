@@ -3,18 +3,20 @@
 
 INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
 {
+    srand( static_cast<unsigned>( time(NULL) ) );
+
     try
     {
         Application app;
 
         const Vertex pyramid_vertices[]=
         {
-            {  1.0f, -1.0f,  0.0f, D3DCOLOR_XRGB(255,  0,  0), },
-            { -1.0f, -1.0f,  0.0f, D3DCOLOR_XRGB(255,  0,255), },
-            { -1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255,255,  0), },
-            {  1.0f,  1.0f,  0.0f, D3DCOLOR_XRGB(255,128,  0), },
-            {  0.0f,  0.0f,  1.41f, D3DCOLOR_XRGB(  0,255,  0), },
-            {  0.0f,  0.0f, -1.41f, D3DCOLOR_XRGB(  0,128,255), },
+            Vertex(D3DXVECTOR3(  1.0f, -1.0f,  0.00f )),
+            Vertex(D3DXVECTOR3( -1.0f, -1.0f,  0.00f )),
+            Vertex(D3DXVECTOR3( -1.0f,  1.0f,  0.00f )),
+            Vertex(D3DXVECTOR3(  1.0f,  1.0f,  0.00f )),
+            Vertex(D3DXVECTOR3(  0.0f,  0.0f,  1.41f )),
+            Vertex(D3DXVECTOR3(  0.0f,  0.0f, -1.41f )),
         };
         const WORD pyramid_indices[] =
         {
@@ -28,8 +30,8 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
             2, 1, 5,
             1, 0, 5,
         };
-        const int VERTICES_NUM = sizeof(pyramid_vertices)/sizeof(pyramid_vertices[0]);
-        const int INDICES_NUM = sizeof(pyramid_indices)/sizeof(pyramid_indices[0]);
+        const unsigned VERTICES_NUM = sizeof(pyramid_vertices)/sizeof(pyramid_vertices[0]);
+        const unsigned INDICES_NUM = sizeof(pyramid_indices)/sizeof(pyramid_indices[0]);
 
         Model pyramid( app.get_device(),
                     D3DPT_TRIANGLELIST,
