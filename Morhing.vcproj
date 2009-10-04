@@ -194,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\tessellate.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Vertex.cpp"
 				>
 			</File>
@@ -229,6 +233,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tessellate.h"
 				>
 			</File>
 			<File

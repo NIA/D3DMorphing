@@ -1,5 +1,6 @@
 #include "main.h"
 #include "Application.h"
+#include "tessellate.h"
 
 INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
 {
@@ -34,14 +35,27 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
         const unsigned INDICES_NUM = sizeof(pyramid_indices)/sizeof(pyramid_indices[0]);
 
         Model pyramid( app.get_device(),
-                    D3DPT_TRIANGLELIST,
-                    pyramid_vertices,
-                    VERTICES_NUM,
-                    pyramid_indices,
-                    INDICES_NUM,
-                    triangles_count(INDICES_NUM) );
+                       D3DPT_TRIANGLELIST,
+                       pyramid_vertices,
+                       VERTICES_NUM,
+                       pyramid_indices,
+                       INDICES_NUM,
+                       triangles_count(INDICES_NUM) );
+
+        Vertex *triangle_vertices;
+        WORD *triangle_indices;
+
+        tessellate(pyramid_vertices, pyramid_indices, 0, &triangle_vertices, &triangle_indices);
         
-        app.add_model(pyramid);
+        Model triangle( app.get_device(),
+                        D3DPT_TRIANGLELIST,
+                        triangle_vertices,
+                        TESSELATED_VERTICES_COUNT,
+                        triangle_indices,
+                        TESSELATED_INDICES_COUNT,
+                        triangles_count(TESSELATED_INDICES_COUNT) );
+
+        app.add_model(triangle);
         app.run();
     }
     catch(RuntimeError &e)

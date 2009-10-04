@@ -13,6 +13,7 @@ public:
     D3DXVECTOR3 pos; // The position for the vertex
     D3DCOLOR color; // The vertex color
 
+    Vertex() : pos(), color(0) {}
     Vertex(D3DXVECTOR3 pos, D3DCOLOR color) : pos(pos), color(color) {}
     Vertex(D3DXVECTOR3 pos) : pos(pos)
     {

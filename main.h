@@ -15,3 +15,4 @@ inline unsigned triangles_count( unsigned indices_count )
 {
     return indices_count/3;
 }
+
