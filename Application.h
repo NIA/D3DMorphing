@@ -44,6 +44,8 @@ public:
     void remove_model(Model &model);
     void run();
 
+    void toggle_wireframe();
+
     ~Application();
 
 };

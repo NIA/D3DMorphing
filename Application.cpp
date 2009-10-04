@@ -38,8 +38,7 @@ void Application::init_device()
                                       D3DCREATE_SOFTWARE_VERTEXPROCESSING,
                                       &present_parameters, &device ) ) )
         throw D3DInitError();
-    
-    check_state( device->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE ) );
+    toggle_wireframe();
 }
 
 void Application::init_shader()
@@ -133,6 +132,9 @@ void Application::process_key(unsigned code)
     case 'D':
         camera.move_counterclockwise();
         break;
+    case VK_SPACE:
+        toggle_wireframe();
+        break;
     }
 }
 
@@ -158,6 +160,24 @@ void Application::run()
         }
         else
             render();
+    }
+}
+
+void Application::toggle_wireframe()
+{
+    static bool wireframe = true;
+    wireframe = !wireframe;
+    // So on first call it sets wireframe to false
+
+    if( wireframe )
+    {
+        check_state( device->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE ) );
+        check_state( device->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME ) );
+    }
+    else
+    {
+        check_state( device->SetRenderState( D3DRS_CULLMODE, D3DCULL_CW ) );
+        check_state( device->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID ) );
     }
 }
 
