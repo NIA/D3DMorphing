@@ -30,7 +30,8 @@ public:
 };
 
 Application::Application() :
-    d3d(NULL), device(NULL), vertex_decl(NULL), shader(NULL), window(WINDOW_SIZE, WINDOW_SIZE), camera(2.84f, 1.44f, -3.77f) // Constants selected for better view of pyramid
+    d3d(NULL), device(NULL), vertex_decl(NULL), shader(NULL),
+    window(WINDOW_SIZE, WINDOW_SIZE), camera(2.84f, 1.44f, 0.94f) // Constants selected for better view of pyramid
 {
     try
     {
