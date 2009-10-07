@@ -1,5 +1,9 @@
 #include "tessellate.h"
 
+const unsigned TESSELATE_DEGREE = 5;
+const unsigned TESSELATED_VERTICES_COUNT = (TESSELATE_DEGREE+1)*(TESSELATE_DEGREE+2)/2;
+const unsigned TESSELATED_INDICES_COUNT = 3*TESSELATE_DEGREE*TESSELATE_DEGREE;
+
 void add_triangle( WORD i1, WORD i2, WORD i3, WORD *indices, WORD &ci )
 {
     indices[ci++] = i1;
@@ -26,11 +30,13 @@ void tessellate(const Vertex *src_vertices,
     WORD ci = 0; // current index
     
     D3DXVECTOR3 start_pos = vertices[0].pos;
-    for( unsigned line = 1; line <= TESSELATE_DEGREE; ++line )
+    for( WORD line = 1; line <= TESSELATE_DEGREE; ++line )
     {
-        for( unsigned column = 0; column < line + 1; ++column ) // line #1 contains 2 vertices
+        for( WORD column = 0; column < line + 1; ++column ) // line #1 contains 2 vertices
         {
-            vertices[cv] = Vertex( start_pos + line*step_down + column*step_right );
+            vertices[cv] = Vertex( start_pos
+                                 + static_cast<FLOAT>(line)*step_down
+                                 + static_cast<FLOAT>(column)*step_right );
             if( column != 0 ) // not first coumn
             {
                 // add outer triangle

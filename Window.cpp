@@ -1,7 +1,10 @@
 #include "Window.h"
 
-const TCHAR *WINDOW_CLASS = _T("Cube");
-const TCHAR *WINDOW_TITLE = _T("Cube");
+namespace
+{
+    const TCHAR *WINDOW_CLASS = _T("Cube");
+    const TCHAR *WINDOW_TITLE = _T("Cube");
+}
 
 Window::Window(int width, int height)
 {

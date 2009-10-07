@@ -1,26 +1,29 @@
 #include "Camera.h"
 
-static const float NEAR_CLIP = 0.8f;
-static const float FAR_CLIP = 1e10f;
-static const float COEFF_A = FAR_CLIP / (FAR_CLIP - NEAR_CLIP);
-static const float COEFF_B = - COEFF_A * NEAR_CLIP;
+namespace
+{
+    const float NEAR_CLIP = 0.8f;
+    const float FAR_CLIP = 1e10f;
+    const float COEFF_A = FAR_CLIP / (FAR_CLIP - NEAR_CLIP);
+    const float COEFF_B = - COEFF_A * NEAR_CLIP;
 
-static const D3DXMATRIX PROJ_MX ( NEAR_CLIP,         0,       0,       0,
-                                          0, NEAR_CLIP,       0,       0,
-                                          0,         0, COEFF_A, COEFF_B,
-                                          0,         0,       1,       0 );
+    const D3DXMATRIX PROJ_MX ( NEAR_CLIP,         0,       0,       0,
+                                       0, NEAR_CLIP,       0,       0,
+                                       0,         0, COEFF_A, COEFF_B,
+                                       0,         0,       1,       0 );
 
-static const float RHO_STEP = 0.1f;
-static const float THETA_STEP = D3DX_PI/40.0f;
-static const float PHI_STEP = D3DX_PI/30.0f;
+    const float RHO_STEP = 0.1f;
+    const float THETA_STEP = D3DX_PI/40.0f;
+    const float PHI_STEP = D3DX_PI/30.0f;
 
-static const float RHO_MIN = 1.74f + NEAR_CLIP; // Suppose models are inside the cube 1x1x1 => in sphere with radius sqrt(3) (approx. 1,74)
-static const float THETA_MIN = 0.01f;
+    const float RHO_MIN = 1.74f + NEAR_CLIP; // Suppose models are inside the cube 1x1x1 => in sphere with radius sqrt(3) (approx. 1,74)
+    const float THETA_MIN = 0.01f;
 
-static const float RHO_MAX = FAR_CLIP;
-static const float THETA_MAX = D3DX_PI - 0.01f; // A little subtraction - to prevent looking parallel to the 'up' vector
+    const float RHO_MAX = FAR_CLIP;
+    const float THETA_MAX = D3DX_PI - 0.01f; // A little subtraction - to prevent looking parallel to the 'up' vector
 
-static const D3DXVECTOR3 DEFAULT_POSITION(1.5f*RHO_MIN, D3DX_PI/3.0f, D3DX_PI/3.0f);
+    const D3DXVECTOR3 DEFAULT_POSITION(1.5f*RHO_MIN, D3DX_PI/3.0f, D3DX_PI/3.0f);
+}
 
 Camera::Camera()
 {

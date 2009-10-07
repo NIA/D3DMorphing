@@ -1,9 +1,12 @@
 #include "Application.h"
 
-static const char      *SHADER_FILE = "shader.vsh";
-static const int        WINDOW_SIZE = 600;
-static const D3DCOLOR   BACKGROUND_COLOR = D3DCOLOR_XRGB( 64, 64, 74 );
-static const bool       INITIAL_WIREFRAME_STATE = true;
+namespace
+{
+    const char      *SHADER_FILE = "shader.vsh";
+    const int        WINDOW_SIZE = 600;
+    const D3DCOLOR   BACKGROUND_COLOR = D3DCOLOR_XRGB( 64, 64, 74 );
+    const bool       INITIAL_WIREFRAME_STATE = true;
+}
 
 Application::Application() :
     d3d(NULL), device(NULL), vertex_decl(NULL), shader(NULL), window(WINDOW_SIZE, WINDOW_SIZE), camera(2.84f, 1.44f, -3.77f) // Constants selected for better view of pyramid

@@ -2,9 +2,9 @@
 #include "main.h"
 #include "Vertex.h"
 
-const unsigned TESSELATE_DEGREE = 5;
-const unsigned TESSELATED_VERTICES_COUNT = (TESSELATE_DEGREE+1)*(TESSELATE_DEGREE+2)/2;
-const unsigned TESSELATED_INDICES_COUNT = 3*TESSELATE_DEGREE*TESSELATE_DEGREE;
+extern const unsigned TESSELATE_DEGREE;
+extern const unsigned TESSELATED_VERTICES_COUNT;
+extern const unsigned TESSELATED_INDICES_COUNT;
 
 // Divides each side of triangle into given number of parts
 void tessellate(const Vertex *src_vertices,
