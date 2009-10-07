@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <time.h>
 
 namespace
 {
@@ -6,7 +7,27 @@ namespace
     const int        WINDOW_SIZE = 600;
     const D3DCOLOR   BACKGROUND_COLOR = D3DCOLOR_XRGB( 64, 64, 74 );
     const bool       INITIAL_WIREFRAME_STATE = true;
+    const float      MORPHING_PERIOD = 0.9f;
+    const float      MORPHING_OMEGA = 2.0f*D3DX_PI/MORPHING_PERIOD;
+
+    const float      FINAL_RADIUS = 1.41f;
+
+    const unsigned   D3DXVEC_SIZE = sizeof(D3DXVECTOR4);
 }
+
+class TetraFloat
+// Contains 4 floats to give a constant float to a shader as a 4-vector
+{
+    float same_floats[D3DXVEC_SIZE];
+public:
+    TetraFloat(float f)
+    {
+        for(unsigned i = 0; i < D3DXVEC_SIZE - 1; ++i)
+            same_floats[i] = f;
+        same_floats[D3DXVEC_SIZE - 1] = 1.0f;
+    }
+    operator const float*() const { return same_floats; }
+};
 
 Application::Application() :
     d3d(NULL), device(NULL), vertex_decl(NULL), shader(NULL), window(WINDOW_SIZE, WINDOW_SIZE), camera(2.84f, 1.44f, -3.77f) // Constants selected for better view of pyramid
@@ -76,7 +97,15 @@ void Application::render()
     // Setup
     check_render( device->SetVertexDeclaration(vertex_decl) );
     check_render( device->SetVertexShader(shader) );
-    check_render( device->SetVertexShaderConstantF(0, camera.get_matrix(), sizeof(D3DXMATRIX)/sizeof(D3DXVECTOR4)) );
+    // Setting constants
+    //   c0 is the final radius
+    check_render( device->SetVertexShaderConstantF(0, TetraFloat(FINAL_RADIUS), 1) );
+    float time = static_cast<float>( clock() )/static_cast<float>( CLOCKS_PER_SEC );
+    float t = (sin(MORPHING_OMEGA*time) + 1.0f)/2.0f; // parameter of morhing: 0 to 1
+    //   c1 is the parameter t
+    check_render( device->SetVertexShaderConstantF(1, TetraFloat(t), 1) );
+    //   c2-c5 is the matrix
+    check_render( device->SetVertexShaderConstantF(2, camera.get_matrix(), sizeof(D3DXMATRIX)/sizeof(D3DXVECTOR4)) );
     // Draw
     for ( std::list<Model*>::iterator iter = models.begin(); iter != models.end(); iter++ )
         (*iter)->draw();
