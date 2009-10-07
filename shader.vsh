@@ -16,17 +16,17 @@ dcl_color v1
 
 def c111, 1.0, 1.0, 1.0, 1.0 ;constant one
 
-dp3 r0.x, v0, v0
-rsq r0.x, r0.x
+dp3 r0, v0, v0
+rsq r0, r0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;  r1.x = 1+t*( (FINAL_RADIUS/r0) -1)  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-mul r1.x, r0.x, c0.x
-sub r1.x, r1.x, c111.x
-mul r1.x, r1.x, c1.x
-add r1.x, r1.x, c111.x
+mul r1, r0, c0
+sub r1, r1, c111
+mul r1, r1, c1
+add r1, r1, c111
 
 mul r2.xyz, v0.xyz, r1.x
 mov r2.w, c111.w
