@@ -10,6 +10,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
     {
         Application app;
 
+        const Index PLANES_PER_PYRAMID = 8;
         const Vertex pyramid_vertices[]=
         {
             Vertex(D3DXVECTOR3(  1.0f, -1.0f,  0.00f )),
@@ -19,7 +20,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
             Vertex(D3DXVECTOR3(  0.0f,  0.0f,  1.41f )),
             Vertex(D3DXVECTOR3(  0.0f,  0.0f, -1.41f )),
         };
-        const WORD pyramid_indices[] =
+        const Index pyramid_indices[PLANES_PER_PYRAMID*VERTICES_PER_TRIANGLE] =
         {
             0, 4, 3,
             3, 4, 2,
@@ -31,29 +32,27 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
             2, 1, 5,
             1, 0, 5,
         };
-        const unsigned VERTICES_NUM = sizeof(pyramid_vertices)/sizeof(pyramid_vertices[0]);
-        const unsigned INDICES_NUM = sizeof(pyramid_indices)/sizeof(pyramid_indices[0]);
 
-        Model pyramid( app.get_device(),
-                       D3DPT_TRIANGLELIST,
-                       pyramid_vertices,
-                       VERTICES_NUM,
-                       pyramid_indices,
-                       INDICES_NUM,
-                       triangles_count(INDICES_NUM) );
+        const Index ALL_TESSELATED_VERTICES_COUNT = PLANES_PER_PYRAMID*TESSELATED_VERTICES_COUNT; // per 8 tessellated triangles
+        const DWORD ALL_TESSELATED_INDICES_COUNT = PLANES_PER_PYRAMID*TESSELATED_INDICES_COUNT; // per 8 tessellated triangles
 
-        Vertex *triangle_vertices;
-        WORD *triangle_indices;
+        Vertex triangle_vertices [ALL_TESSELATED_VERTICES_COUNT];
+        Index triangle_indices [ALL_TESSELATED_INDICES_COUNT];
 
-        tessellate(pyramid_vertices, pyramid_indices, 0, &triangle_vertices, &triangle_indices);
+        for( DWORD i = 0; i < PLANES_PER_PYRAMID; ++i )
+        {
+            tessellate( pyramid_vertices, pyramid_indices, i*VERTICES_PER_TRIANGLE,
+                        &triangle_vertices[i*TESSELATED_VERTICES_COUNT], i*TESSELATED_VERTICES_COUNT,
+                        &triangle_indices[i*TESSELATED_INDICES_COUNT] );
+        }
         
         Model triangle( app.get_device(),
                         D3DPT_TRIANGLELIST,
                         triangle_vertices,
-                        TESSELATED_VERTICES_COUNT,
+                        ALL_TESSELATED_VERTICES_COUNT,
                         triangle_indices,
-                        TESSELATED_INDICES_COUNT,
-                        triangles_count(TESSELATED_INDICES_COUNT) );
+                        ALL_TESSELATED_INDICES_COUNT,
+                        ALL_TESSELATED_INDICES_COUNT/VERTICES_PER_TRIANGLE );
 
         app.add_model(triangle);
         app.run();

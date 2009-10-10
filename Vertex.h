@@ -1,6 +1,12 @@
 #pragma once
 #include "main.h"
 
+typedef DWORD Index;
+extern const D3DFORMAT INDEX_FORMAT;
+
+// It must be a macro, not a constant, because it must be known at compile-time (it is used for array initialization)
+#define VERTICES_PER_TRIANGLE 3
+
 inline int rand_col_comp()
 // Returns random color component: an integer between 0 and 255
 {
@@ -21,4 +27,4 @@ public:
     }
 };
 
-extern D3DVERTEXELEMENT9 VERTEX_DECL_ARRAY[];
+extern const D3DVERTEXELEMENT9 VERTEX_DECL_ARRAY[];

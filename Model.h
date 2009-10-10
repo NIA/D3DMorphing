@@ -21,7 +21,7 @@ public:
             D3DPRIMITIVETYPE primitive_type,
             const Vertex *vertices,
             unsigned vertices_count,
-            const WORD *indices,
+            const Index *indices,
             unsigned indices_count,
             unsigned primitives_count );
     
