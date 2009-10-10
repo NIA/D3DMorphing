@@ -5,6 +5,8 @@
 INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
 {
     srand( static_cast<unsigned>( time(NULL) ) );
+    Vertex *triangle_vertices = NULL;
+    Index *triangle_indices = NULL;
 
     try
     {
@@ -36,8 +38,8 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
         const Index ALL_TESSELATED_VERTICES_COUNT = PLANES_PER_PYRAMID*TESSELATED_VERTICES_COUNT; // per 8 tessellated triangles
         const DWORD ALL_TESSELATED_INDICES_COUNT = PLANES_PER_PYRAMID*TESSELATED_INDICES_COUNT; // per 8 tessellated triangles
 
-        Vertex triangle_vertices [ALL_TESSELATED_VERTICES_COUNT];
-        Index triangle_indices [ALL_TESSELATED_INDICES_COUNT];
+        triangle_vertices = new Vertex[ALL_TESSELATED_VERTICES_COUNT];
+        triangle_indices = new Index[ALL_TESSELATED_INDICES_COUNT];
 
         for( DWORD i = 0; i < PLANES_PER_PYRAMID; ++i )
         {
@@ -56,9 +58,15 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
 
         app.add_model(triangle);
         app.run();
+
+        delete_array(&triangle_indices);
+        delete_array(&triangle_vertices);
     }
     catch(RuntimeError &e)
     {
+        delete_array(&triangle_indices);
+        delete_array(&triangle_vertices);
+
         const TCHAR *MESSAGE_BOX_TITLE = _T("Cube error!");
         MessageBox(NULL, e.message(), MESSAGE_BOX_TITLE, MB_OK | MB_ICONERROR);
         return -1;

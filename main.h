@@ -11,3 +11,12 @@ inline void release_interface(IUnknown* iface)
     if( iface != NULL )
         iface->Release();
 }
+
+template<class Type> void delete_array(Type **dynamic_array)
+{
+    if( *dynamic_array != NULL)
+    {
+        delete[] *dynamic_array;
+        *dynamic_array = NULL;
+    }
+}

@@ -7,7 +7,7 @@ namespace
     const int        WINDOW_SIZE = 600;
     const D3DCOLOR   BACKGROUND_COLOR = D3DCOLOR_XRGB( 64, 64, 74 );
     const bool       INITIAL_WIREFRAME_STATE = true;
-    const float      MORPHING_PERIOD = 0.9f;
+    const float      MORPHING_PERIOD = 1.9f;
     const float      MORPHING_OMEGA = 2.0f*D3DX_PI/MORPHING_PERIOD;
 
     const float      FINAL_RADIUS = 1.41f;
@@ -61,7 +61,7 @@ void Application::init_device()
     present_parameters.AutoDepthStencilFormat = D3DFMT_D16;
     // Create the device
     if( FAILED( d3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, window,
-                                      D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+                                      D3DCREATE_HARDWARE_VERTEXPROCESSING,
                                       &present_parameters, &device ) ) )
         throw D3DInitError();
     toggle_wireframe();

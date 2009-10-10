@@ -1,5 +1,9 @@
 #include "tessellate.h"
 
+const DWORD TESSELATE_DEGREE = 150;
+const Index TESSELATED_VERTICES_COUNT = (TESSELATE_DEGREE+1)*(TESSELATE_DEGREE+2)/2;
+const DWORD TESSELATED_INDICES_COUNT = 3*TESSELATE_DEGREE*TESSELATE_DEGREE;
+
 namespace
 {
     void add_triangle( Index i1, Index i2, Index i3, Index *indices, DWORD &current_index, Index offset )
