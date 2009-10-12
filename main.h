@@ -4,6 +4,7 @@
 #include <d3dx9.h>
 #include <cstdlib>
 #include <ctime>
+#include <crtdbg.h>
 #include "Error.h"
 
 inline void release_interface(IUnknown* iface)
@@ -14,6 +15,7 @@ inline void release_interface(IUnknown* iface)
 
 template<class Type> void delete_array(Type **dynamic_array)
 {
+    _ASSERT(dynamic_array != NULL);
     if( *dynamic_array != NULL)
     {
         delete[] *dynamic_array;

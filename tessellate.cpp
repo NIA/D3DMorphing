@@ -19,6 +19,10 @@ void tessellate(const Vertex *src_vertices, const Index *src_indices, DWORD src_
 // Writes data into arrays given as `res_vertices' and `res_indices',
 //   assuming that there are already `res_vertices_offset' vertices before `res_vertices' pointer.
 {
+    _ASSERT(src_vertices != NULL);
+    _ASSERT(src_indices != NULL);
+    _ASSERT(res_vertices != NULL);
+    _ASSERT(res_indices != NULL);
     // i1, i2 i3 are indices of source triangle vertices
     const Index i1 = src_indices[src_index_offset];
     const Index i2 = src_indices[src_index_offset + 1];

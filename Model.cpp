@@ -7,6 +7,8 @@ Model::Model(   IDirect3DDevice9 *device, D3DPRIMITIVETYPE primitive_type, const
 : device(device), vertices_count(vertices_count), primitives_count(primitives_count),
   primitive_type(primitive_type), vertex_buffer(NULL), index_buffer(NULL)
 {
+    _ASSERT(vertices != NULL);
+    _ASSERT(indices != NULL);
     try
     {
         const unsigned vertices_size = vertices_count*sizeof(vertices[0]);
