@@ -67,7 +67,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, INT )
         delete_array(&triangle_indices);
         delete_array(&triangle_vertices);
 
-        const TCHAR *MESSAGE_BOX_TITLE = _T("Cube error!");
+        const TCHAR *MESSAGE_BOX_TITLE = _T("Morphing error!");
         MessageBox(NULL, e.message(), MESSAGE_BOX_TITLE, MB_OK | MB_ICONERROR);
         return -1;
     }
